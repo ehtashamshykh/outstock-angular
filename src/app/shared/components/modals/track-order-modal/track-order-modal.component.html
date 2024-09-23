@@ -1,0 +1,29 @@
+<mat-stepper
+  #progressStepper
+  class="example-stepper"
+  [orientation]="(stepperOrientation | async)!"
+>
+  <mat-step *ngFor="let event of events; let i = index" [label]="event.label">
+    <ng-template matStepperIcon="edit">
+      <mat-icon>done</mat-icon>
+    </ng-template>
+    <div *ngIf="trackingEvents[i]; else noEvent">
+      <p>{{ trackingEvents[i].description }}</p>
+      <p><strong>Location:</strong> {{ trackingEvents[i].location }}</p>
+      <p><strong>Date:</strong> {{ trackingEvents[i].timestamp.slice(0, 10) }}</p>
+      <div *ngIf="event.label !== 'Delivered'">
+        <button *ngIf="i > 0" mat-button matStepperPrevious class="mr-5">Back</button>
+        <button mat-button matStepperNext>Next</button>
+      </div>
+      <div *ngIf="event.label === 'Delivered'">
+        <button mat-button matStepperPrevious class="mr-5">Back</button>
+        <button mat-button (click)="cancel()">Close</button>
+      </div>
+    </div>
+    <ng-template #noEvent>
+      {{ event.defaultMessage }}
+    </ng-template>
+  </mat-step>
+</mat-stepper>
+
+ 

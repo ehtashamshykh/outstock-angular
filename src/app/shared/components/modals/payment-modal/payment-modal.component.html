@@ -1,0 +1,20 @@
+<div class="modal-content">
+    <div class="product__modal-wrapper p-relative">
+        <div class="product__modal-close p-absolute">
+            <button (click)="cancel()">
+                <i class="fal fa-times"></i>
+            </button>
+        </div>
+        <div class="basic-login">
+            <h3 class="text-center mb-60">Payment Method</h3>
+            <div class="pb-20">
+                <input type="radio" class="btn-check w-75" name="options" id="option1" (click)="paymentMethodId = data.userDetail[0].id" autocomplete="off" checked>
+                <label class="btn" for="option1">{{data.userDetail[0].provider}}</label>
+                
+                <input type="radio" class="btn-check w-75" name="options" id="option2" (click)="paymentMethodId = data.userDetail[1].id" autocomplete="off">
+                <label class="btn" for="option2">{{data.userDetail[1].provider}}</label>
+            </div>
+            <button class="os-btn w-100" (click)="onSubmit()">Select</button>
+        </div>
+    </div>
+</div>

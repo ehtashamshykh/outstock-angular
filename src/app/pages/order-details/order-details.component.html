@@ -1,0 +1,98 @@
+<!-- header start -->
+<app-header-one [transparent]="true" [white_bg]="true"></app-header-one>
+<!-- header end -->
+
+<main>
+
+  <!-- breadcrumb start -->
+  <app-breadcrumb-one title="Order Details" subtitle="Order Details"></app-breadcrumb-one>
+  <!-- breadcrumb end -->
+
+  <!-- order details start-->
+  <section class="p-10 mt-20">
+    <div class="mb-20">
+      <h3>Order Details</h3>
+      <span class="order"><span class="mr-5">Ordered on  August 21, 2024</span>  |  <span class="ml-5">Order# 111-5846452-1476221</span></span>
+    </div>
+    <div class="main-container">
+      <div class="d-flex container">
+        <div class="row w-100">
+        <div class="col-md-4">
+          <div class="d-flex flex-column mb-20" >
+            <span class="fs-6 mb-1 header">Shipping Address</span>
+            <span class="text-danger fs-6"><strong>John Doe
+              123 Main St. Apt 4B
+              Anytown, NY 12345</strong></span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="d-flex flex-column mb-20" >
+            <span class="fs-6 mb-1 header">Payment Method</span>
+            <span class="fs-6 text-color">(Paypal)</span>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="d-flex flex-column mb-20" >
+            <span class="fs-6 mb-1 header">Order Summary</span>
+            <p class="text-color"><span>Item's Subtotal:</span> <span>${{cartService.totalPriceQuantity().total.toFixed(2)}}</span></p>
+            <p class="text-color"><span>Shipping & Handling:</span> <span>$400</span></p>
+            <p class="text-color"><span>Total before tax:</span> <span>$400</span></p>
+            <p class="text-color"><span>Estimated tax to be calculated:</span> <span>$400</span></p>
+            <p class="text-color"><span class="header">Grand Total:</span><span>${{(cartService.totalPriceQuantity().total).toFixed(2)}}</span></p>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+    <div class="transection-container">
+      <p class="text-primary mt-1">Transactions</p>
+      <p class="text-color">Items shipped: August 21, 2024 -  $50</p>
+      <p class="text-color">Total: $50</p>
+    </div>
+
+    <div class="d-flex justify-content-between mt-3 product-container">
+      <div>
+      <h5>Delivered Aug 21, 2024</h5>
+      <p class="text-color" style="margin-bottom: 10px;">Your package was left near the front door or porch.</p>
+      <div>
+        <div class="row">
+          <div class="col-md-7 col-sm-12">
+            <table>
+              <tbody>
+                <tr *ngFor="let cartItem of cartService.getCartItems">
+                  <td class="d-flex">
+                    <img [src]="cartItem.product.imageUrl" class="img-thumbnail me-3" alt="Product Image">
+                  </td>
+                  <td>
+                      <div>
+                        <p class="mb-2 text-black">
+                          <strong>{{cartItem.product.shortDescription}}</strong>
+                        </p>
+                        <p class="text-danger mb-1"><strong>${{cartItem.product.price}}</strong></p>
+                        <p class="text-muted text-color">Sold by: Outstock</p>
+                        <p class="text-color">Return eligible for sep 10, 2024</p>
+                        <p class="text-danger">$50</p>
+                        <button class="btn rounded-pill mb-3" style="background-color: #BC8246; color: white;" (click)="cartService.addCartProduct(cartItem.productId)">Buy it again</button>
+                      </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div> 
+          <div class="col-md-4 col-sm-12">
+            <button class="btn" (click)="trackOrderDialog()">Track Package</button>
+            <button class="btn">Return to replace items</button>
+            <button class="btn">Share gift receipt</button>
+            <button class="btn">Ask Product Question</button>
+            <button class="btn">Leave seller feedback</button>
+            <button class="btn">Write a product review</button>
+          </div> 
+        </div>
+      </div>
+    </div>
+      
+    </div>
+  </section>
+  <!-- order details end-->
+
+</main>

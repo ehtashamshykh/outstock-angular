@@ -1,0 +1,20 @@
+<ul class="extra-info">
+  <li>
+    <div class="my-account">
+      <span *ngIf="username">{{ username.split('@')[0] }} <i class="ionicons ion-record"></i> </span>
+      <div class="extra-title">
+        <h5>My Account</h5>
+      </div>
+      <ul>
+        <li><a routerLink="/shop/wishlist">Wishlist</a></li>
+        <li><a routerLink="/pages/checkout">Checkout</a></li>
+        <li><a routerLink="/pages/account">Account</a></li>
+      </ul>
+      <ul><li><a routerLink="/pages/register">Create Account</a></li></ul>
+      <ul *ngIf="username; else isSignIn"><li><a routerLink="" (click)="signOut()">SignOut</a></li></ul>
+      <ng-template #isSignIn>
+        <ul><li><a routerLink="" (click)="signIn()">SignIn</a></li></ul>
+      </ng-template>
+    </div>
+  </li>
+</ul>

@@ -1,0 +1,201 @@
+<!-- header start -->
+<app-header-one [transparent]="true" [white_bg]="true"></app-header-one>
+<!-- header end -->
+
+<main>
+
+  <!-- breadcrumb start -->
+  <app-breadcrumb-one title="Account" subtitle="Account"></app-breadcrumb-one>
+  <!-- breadcrumb end -->
+
+  <!-- profile area start -->
+  <section class="profile__area pt-120 pb-50 grey-bg">
+    <div class="container">
+      <div class="profile__basic-inner pb-20 bg-white">
+        <div class="row align-items-center">
+          <div class="col-xxl-6 col-md-6">
+            <div class="profile__basic d-md-flex align-items-center">
+              <div class="profile__basic-thumb mr-30">
+                <img src="/assets/img/testimonial/person-1.jpg" alt="">
+              </div>
+              <div class="profile__basic-content">
+                <h3 class="profile__basic-title">
+                  Welcome Back <span>{{ userProfile ? userProfile.firstName + ' ' + userProfile.lastName : "John Smith" }}</span>
+                </h3>
+                <p>2 Running Courses <a routerLink="/home/home-style-4">View Course</a></p>
+              </div>
+            </div>
+          </div>
+          <div class="col-xxl-6 col-md-6">
+            <div class="profile__basic-cart d-flex align-items-center justify-content-md-end">
+              <div class="cart-info mr-10">
+                <a routerLink="/shop/cart">View cart</a>
+              </div>
+              <div class="cart-item">
+                <a routerLink="/shop/cart">
+                  <i class="fa-regular fa-basket-shopping"></i>
+                  <span class="cart-quantity">{{ cartService.getCartItems.length ? cartService.getCartItems.length : 0 }}</span>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- profile area end -->
+
+  <!-- profile menu area start -->
+  <section class="profile__menu pb-70 grey-bg">
+    <div class="container">
+      <div class="row">
+        <div class="col-xxl-4 col-md-4">
+          <div class="profile__menu-left bg-white mb-50">
+            <h3 class="profile__menu-title"><i class="fa fa-list-alt"></i> Your Menu</h3>
+            <div class="profile__menu-tab">
+              <div class="nav nav-tabs flex-column justify-content-start text-start" id="nav-tab" role="tablist">
+                <div class="nav-link d-flex" [ngClass]="{'active': activeTab === 0}">
+                  <button class="bg-transparent" id="nav-account-tab" (click)="activeTab = 0" data-bs-toggle="tab" data-bs-target="#nav-account" type="button" role="tab" aria-controls="nav-account" aria-selected="true"><i class="fa fa-user"></i> My Account </button>
+                  <mat-icon class="info-size cursor-pointer ml-10" (click)="navigateToLink()">info</mat-icon>
+                </div>
+                <div class="nav-link d-flex" [ngClass]="{'active': activeTab === 1}">
+                  <button class="bg-transparent" id="nav-order-tab" (click)="activeTab = 1" data-bs-toggle="tab" data-bs-target="#nav-order" type="button" role="tab" aria-controls="nav-order" aria-selected="false" (click)="fetchOrders()"><i class="fa fa-file"></i> Orders </button>
+                  <mat-icon class="info-size cursor-pointer ml-10" (click)="navigateToLink()">info</mat-icon>
+                </div>
+                <button class="nav-link" [ngClass]="{'active': activeTab === 2}" id="nav-password-tab" (click)="activeTab = 2" data-bs-toggle="tab" data-bs-target="#nav-password" type="button" role="tab" aria-controls="nav-password" aria-selected="false"><i class="fa fa-lock"></i>Change Password</button>
+                <div class="nav-link d-flex">
+                  <button class="bg-transparent" (click)="signOut()"><i class="fa fa-sign-out"></i> Logout</button>
+                  <mat-icon class="info-size cursor-pointer ml-10" (click)="navigateToLink()">info</mat-icon>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xxl-8 col-md-8">
+          <div class="profile__menu-right">
+            <div class="tab-content" id="nav-tabContent">
+              <div class="tab-pane fade" [ngClass]="{'show active': activeTab === 0}" id="nav-account" role="tabpanel" aria-labelledby="nav-account-tab">
+                <div class="profile__info">
+                  <div class="profile__info-top">
+                    <div class="container">
+                      <div class="row align-items-center">
+                        <div class="col-md-7">
+                          <h3 class="profile__info-title">Profile Information</h3>
+                        </div>
+                        <div class="col-md-5 d-flex justify-content-end">
+                          <button class="profile__info-btn mr-10" type="button" data-bs-toggle="modal"
+                              data-bs-target="#profile_edit_modal"><i class="fa-regular fa-pen-to-square"></i>Edit Profile</button>
+                          <span>|</span>
+                          <button class="profile__info-btn ml-10" (click)="openModal()" appTooltip>Delete Account</button>
+                        </div>
+                      </div>
+                    </div>
+                    </div>
+
+                  <div class="profile__info-wrapper white-bg">
+                    <div class="profile__info-item">
+                      <p>Name</p>
+                      <h4>{{ userProfile ? userProfile.firstName + ' ' + userProfile.lastName : "John Smith" }}</h4>
+                    </div>
+                    <div class="profile__info-item">
+                      <p>Email</p>
+                      <h4>
+                        <a href="outstock@hotmail.com" class="__cf_email__" data-cfemail="94fdfaf2fbd4f1f0e1fff1e6baf7fbf9">{{ userProfile ? userProfile.email : "outstock@hotmail.com" }}</a>
+                      </h4>
+                    </div>
+                    <div class="profile__info-item">
+                      <p>Phone</p>
+                      <h4>{{ userProfile ? userProfile.phoneNumber : 123-234-2341}}</h4>
+                    </div>
+                    <div class="profile__info-item">
+                      <p>Address</p>
+                      <h4>
+                        {{ userProfile ? userProfile.addresses[0].addressLine1 + ' ' + (userProfile.addresses[0].addressLine2 || '') + ', ' + userProfile.addresses[0].city + ', ' + userProfile.addresses[0].state + ' ' + userProfile.addresses[0].zipCode : "No address available"}}
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" [ngClass]="{'show active': activeTab === 1}" id="nav-order" role="tabpanel" aria-labelledby="nav-order-tab">
+                <div class="order__info">
+                  <div class="order__info-top d-flex justify-content-between align-items-center">
+                    <div class="d-flex align-items-end">
+                      <h3 class="order__info-title">My Orders</h3>
+                      <a href="https://roadmap.sh/guides/what-is-internet" class="ml-10 info-icon" target="_blank"><mat-icon>info</mat-icon></a>
+                    </div>
+                    <button type="button" class="order__info-btn">
+                      <i class="fa-regular fa-trash-can"></i> Clear
+                    </button>
+                  </div>
+
+                  <div class="order__list white-bg table-responsive">
+                    <table class="table">
+                      <thead>
+                        <tr>
+                          <th scope="col">Order ID</th>
+                          <th scope="col">Name</th>
+                          <th scope="col">Quantity</th>
+                          <th scope="col">Price</th>
+                          <th scope="col">Status</th>
+                          <th scope="col">Details</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let order of orderedProducts">
+                          <td class="order__id">{{ order?.orderNumber }}</td>
+                          <td><a [routerLink]="['/pages/order-details/'+order.id]" class="order__title">{{ order?.productName }}</a>
+                          </td>
+                          <td>{{ order?.quantity }}</td>
+                          <td>{{ order?.price }}</td>
+                          <td>{{ order?.status }}</td>
+                          <td><a [routerLink]="['/pages/order-details/'+order.id]" class="order__view-btn">View</a></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div class="tab-pane fade" [ngClass]="{'show active': activeTab === 2}" id="nav-password" role="tabpanel" aria-labelledby="nav-password-tab">
+                <div class="password__change">
+                  <div class="password__change-top">
+                    <h3 class="password__change-title">Change Password</h3>
+                  </div>
+                  <div class="password__form white-bg">
+                    <form [formGroup]="changePasswordForm" (ngSubmit)="changePassword()">
+                      <div class="password__input">
+                        <p>Old Password</p>
+                        <input type="password" formControlName="oldPassword" placeholder="Enter Old Password">
+                        <span *ngIf="(oldPassword?.hasError('required') && oldPassword?.touched) || (oldPassword?.errors?.['minlength'] && oldPassword?.dirty) || (formSubmitted && !oldPassword?.value)" class="text-danger">
+                          Password is required and must be a 6 character
+                        </span>
+                      </div>
+                      <div class="password__input">
+                        <p>New Password</p>
+                        <input type="password" formControlName="newPassword" placeholder="Enter New Password">
+                        <span *ngIf="(newPassword?.hasError('required') && newPassword?.touched) || (newPassword?.errors?.['minlength'] && newPassword?.dirty) || (formSubmitted && !newPassword?.value)" class="text-danger">
+                          Password is required and must be a 6 character
+                        </span>
+                      </div>
+                      <div class="password__input">
+                        <p>Confirm Password</p>
+                        <input type="password" formControlName="confirmPassword" placeholder="Confirm Password">
+                        <span *ngIf="(confirmPassword?.hasError('required') && confirmPassword?.touched) || (formSubmitted && !confirmPassword?.value) || changePasswordForm.hasError('passwordMismatch')" class="text-danger">
+                          Passsword and Confirm Password didn't match
+                        </span>
+                      </div>
+                      <div class="password__input">
+                        <button type="submit" class="os-btn os-btn-black">Update password</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- profile menu area end -->
+
+</main>

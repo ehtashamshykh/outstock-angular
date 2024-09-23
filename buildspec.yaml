@@ -1,0 +1,29 @@
+version: 0.2
+env:
+  variables:
+    CACHE_CONTROL: "86400"
+    BUILD_ENV: "prod"
+    S3_BUCKET: "cloudexplorationone.com"
+phases:
+  install:
+    commands:
+      - echo Installing source NPM dependencies...
+      - cd ecommerce-app
+      - rm -rf node_modules package-lock.json
+      - export NODE_OPTIONS="--max-old-space-size=2048"
+      - npm install
+      - npm install -g @angular/cli
+      - npm install webpack webpack-cli --save-dev
+  build:
+    commands:
+      - echo Build started on `date`
+      - ng build --configuration production --aot
+  post_build:
+    commands:
+      - aws s3 cp ./dist/ng-outstock s3://${S3_BUCKET} --recursive --cache-control "max-age=${CACHE_CONTROL}"
+      - echo Build completed on `date`
+artifacts:
+  files:
+    - '**/*'
+  base-directory: 'dist*'
+  discard-paths: yes

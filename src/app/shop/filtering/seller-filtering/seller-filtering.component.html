@@ -1,0 +1,21 @@
+<div class="sidebar__widget mb-50">
+    <div class="sidebar__widget-title mb-25">
+      <h3>Seller</h3>
+    </div>
+    <div class="sidebar__widget-content">
+      <div class="brand">
+        <ul>
+          <li *ngFor="let b of sellers; let i = index">
+            <a
+              class="cursor-pointer"
+              (click)="handleSeller(b)"
+              [class.active]="b.toLowerCase() === seller"
+            >
+              {{ b }}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  

@@ -1,0 +1,13 @@
+export const environment = {
+  awsCognito: {
+    userPoolId: 'REPLACE_WITH_USER_POOL_ID',
+    userPoolClientId: 'REPLACE_WITH_USER_POOL_CLIENT_ID',
+  }
+};
+
+export const API_URL = 'REPLACE_WITH_API_URL';
+export const CART_API_URL = 'REPLACE_WITH_CART_API_URL';
+export const REVIEW_API_URL = 'REPLACE_WITH_REVIEW_API_URL';
+export const PROFILE_API_URL = 'REPLACE_WITH_PROFILE_API_URL';
+export const WISHLIST_API_URL = 'REPLACE_WITH_WISHLIST_API_URL';
+export const PLACE_ORDER_API_URL = 'REPLACE_WITH_PLACE_ORDER_API_URL';

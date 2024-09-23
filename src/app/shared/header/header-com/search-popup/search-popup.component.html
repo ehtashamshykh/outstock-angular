@@ -1,0 +1,128 @@
+<!-- search area start -->
+<section
+  class="header__search white-bg transition-3"
+  [class.search-opened]="utilsService.isSearchOpen"
+>
+  <div class="container">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="header__search-inner text-center">
+          <form>
+            <div class="d-flex justify-content-between align-items-center pb-3">
+              <div class="mx-auto">
+                <h3 class="d-flex align-items-end">
+                  Search 
+                  <a href="https://roadmap.sh/guides/what-is-internet" class="info-margins" target="_blank"><mat-icon>info</mat-icon></a>
+                </h3>
+              </div>
+              <div>
+                <a
+                  (click)="utilsService.handleSearchOpen()"
+                  class="header__search-btn-close cursor-pointer">
+                  <i class="fal fa-times"></i>
+                </a>
+              </div>
+            </div>
+            <div class="header__search-input p-relative pb-5">
+              <input
+                type="text"
+                placeholder="Search for products... "
+                [(ngModel)]="searchText"
+                name="searchText"
+              />
+              <button type="submit" (click)="handleSearchSubmit()"><i class="far fa-search"></i></button>
+            </div>
+            <div class="shop__bottom">
+              <div class="container">
+                <div class="row">
+                  <div class="col-xl-12">
+                    <div class="product__details-tab">
+                      <div class="product__details-tab-nav text-center mb-25">
+                        <div class="nav-bar">
+                        <nav>
+                          <div class="nav nav-tabs justify-content-start justify-content-sm-center" id="pro-details" role="tablist">
+                            <a class="nav-item nav-link active" id="category-tab" data-bs-toggle="tab" href="#categoryFilter" role="tab" aria-controls="category" aria-selected="true">Category</a>
+                            <a class="nav-item nav-link" id="price-tab" data-bs-toggle="tab" href="#priceFilter" role="tab" aria-controls="price" aria-selected="false">Price</a>
+                            <a class="nav-item nav-link" id="size-tab" data-bs-toggle="tab" href="#sizeFilter" role="tab" aria-controls="size" aria-selected="false">Size</a>
+                            <a class="nav-item nav-link" id="color-tab" data-bs-toggle="tab" href="#colorFilter" role="tab" aria-controls="color" aria-selected="false">Color</a>
+                            <a class="nav-item nav-link" id="brand-tab" data-bs-toggle="tab" href="#brandFilter" role="tab" aria-controls="brand" aria-selected="false">Brand</a>
+                            <a class="nav-item nav-link" id="seller-tab" data-bs-toggle="tab" href="#sellerFilter" role="tab" aria-controls="seller" aria-selected="false">Seller</a>
+                          </div>
+                        </nav>
+                        <button class="reset-btn" (click)="handleResetFilter()">Reset</button>
+                      </div>
+                      </div>
+                      <div class="tab-content" id="pro-detailsContent">
+                        <div class="tab-pane fade show active" id="categoryFilter" role="tabpanel">
+                          <div class="header__search-categories">
+                            <ul class="search-category">
+                              <li (click)="handleCategory(category)"
+                                *ngFor="let category of productService.categoryData; let i = index"
+                              >
+                                <a class="cursor-pointer" >
+                                  {{ (category.name || '')}}
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                          <div class="header__search-categories mt-30" *ngIf="subCategories.length">
+                            <div class="mb-30">
+                              <h3>Sub Category</h3>
+                            </div>
+                            <ul class="search-category">
+                              <li (click)="handleProductType(subCategory.name)"
+                                *ngFor="let subCategory of subCategories; let i = index"
+                              >
+                                <a class="cursor-pointer" [class.active]="subCategory.name.toLowerCase() === productType">
+                                  {{ (subCategory.name || '')}}
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                        <div class="tab-pane fade show" id="priceFilter" role="tabpanel">
+                          <div class="shop__area w-50 mx-auto">
+                            <!-- price filter start -->
+                            <app-price-filter [min]="minPrice" [max]="maxPrice" (priceFilter)="updateFilter($event)"></app-price-filter>
+                            <!-- price filter end -->
+                          </div>
+                        </div>
+                        <div class="tab-pane fade show" id="sizeFilter" role="tabpanel">
+                          <!-- size filter start -->
+                          <app-size-filtering></app-size-filtering>
+                          <!-- size filter end -->
+                        </div>
+                        <div class="tab-pane fade show" id="colorFilter" role="tabpanel">
+                          <!-- color filter start -->
+                          <app-color-filtering></app-color-filtering>
+                          <!-- color filter end -->
+                        </div>
+                        <div class="tab-pane fade show" id="brandFilter" role="tabpanel">
+                          <!-- brand filter start -->
+                          <app-brand-filtering></app-brand-filtering>
+                          <!-- brand filter end -->
+                        </div>
+                        <div class="tab-pane fade show" id="sellerFilter" role="tabpanel">
+                          <!-- seller filter start -->
+                          <app-seller-filtering></app-seller-filtering>
+                          <!-- seller filter end -->
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- body overlay -->
+<div
+  (click)="utilsService.handleSearchOpen()"
+  class="body-overlay transition-3"
+  [class.opened]="utilsService.isSearchOpen"
+></div>
+<!-- search area end -->

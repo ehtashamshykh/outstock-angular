@@ -1,0 +1,200 @@
+<!-- header start -->
+<app-header-one [transparent]="true" [white_bg]="true"></app-header-one>
+<!-- header end -->
+
+<main>
+
+  <!-- breadcrumb start -->
+  <app-breadcrumb-one title="Checkout" subtitle="Checkout"></app-breadcrumb-one>
+  <!-- breadcrumb end -->
+
+  <!-- checkout-area start -->
+  <section class="checkout-area pt-100 pb-70">
+    <div class="container-fluid">
+      <div *ngIf="cartService.getCartItems.length === 0;else checkoutBlock" class="text-center pt-80 pb-30">
+        <h3 class="py-2">No items found in cart to checkout</h3>
+        <a routerLink="/shop" class="os-btn os-btn-black">
+          Return to shop
+        </a>
+      </div>
+
+      <ng-template #checkoutBlock>
+          <div class="row">
+            <!-- Left Section -->
+            <div class="col-lg-1"></div>
+            <div class="col-lg-7 col-md-12">
+              <!-- Shipping address -->
+              <div class="row">
+                <!-- Left Section -->
+                <div class="col-md-4">
+                  <h4>
+                    <strong><span class="pr-20">1</span>Shipping address</strong>
+                  </h4>
+                </div>
+        
+                <!-- Middle Section -->
+                <div class="col-md-6">
+                  <div class="d-flex flex-column" *ngIf="userDetails">
+                    <span class="text-danger fs-6 mb-1"><strong>{{userDetails.firstName}} {{userDetails.lastName}}</strong></span>
+                    <span class="text-danger fs-6"><strong>{{userDetails.addresses[0].addressLine1}}. {{userDetails.addresses[0].addressLine2}}<br>{{userDetails.addresses[0].city}}, {{userDetails.addresses[0].state}} {{userDetails.addresses[0].zipCode}}</strong></span>
+                    <a href="#" class="text-primary mt-1">Add delivery instructions</a>
+                  </div>
+                </div>
+        
+                <!-- Right Section -->
+                <div class="col-md-2 text-end">
+                  <a class="text-primary cursor-pointer">Change</a>
+                </div>
+              </div>
+              <hr>
+              <!-- Payment Method -->
+              <div class="row">
+                <!-- Left Section -->
+                <div class="col-md-4">
+                  <h4 *ngIf="userDetails">
+                    <strong><span class="pr-20">2</span>Payment method ({{paymentMethodName || userDetails.paymentMethods[0].provider}})</strong>
+                  </h4>
+                </div>
+        
+                <!-- Middle Section -->
+                <div class="col-md-6">
+                  <p class="text-black">Paying with Mastercard <strong class="text-danger">1111</strong></p>
+                  <p class="text-black"><span class="text-primary">Billing address:</span> Same as shipping address.</p>
+                  <div class="mt-3">
+                    <label class="text-black">Add a gift card or promotion code</label>
+                    <form class="row g-3">
+                      <div class="col-auto">
+                        <input type="text" class="form-control" placeholder="Enter code">
+                      </div>
+                      <div class="col-auto">
+                        <button type="submit" class="btn btn-outline-secondary rounded-pill">Apply</button>
+                      </div>
+                    </form>
+                  </div>
+                </div>
+        
+                <!-- Right Section -->
+                <div class="col-md-2 text-end">
+                  <a class="text-primary cursor-pointer" (click)="paymentMethodDialog()">Change</a>
+                </div>
+              </div>
+              <hr>
+              <!-- Review items -->
+              <div class="row">
+                <!-- Left Section -->
+                <div class="col-md-12">
+                  <h4>
+                    <strong><span class="pr-20">3</span>Review items and shipping</strong>
+                  </h4>
+                </div>
+                <!-- Card -->
+                <div class="col-md-12">
+                  <div class="card p-3">
+                    <div class="row">
+                      <!-- Left Section (Product Image and Details) -->
+                      <div class="col-md-12 ml-5">
+                        <h4 class="mb-0" style="color: #C1361C;"><strong>Arriving Sep 10, 2024 - Sep 13, 2024</strong></h4>
+                        <p class="mb-1 text-muted">Items shipped from NewHolo</p>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-7">
+                          <table>
+                            <tbody>
+                              <tr *ngFor="let cartItem of cartService.getCartItems">
+                                <td>
+                                  <img [src]="cartItem.product.imageUrl" class="img-thumbnail me-3" alt="Product Image">
+                                </td>
+                                <td>
+                                    <div>
+                                      <p class="mb-2 text-black">
+                                        <strong>{{cartItem.product.shortDescription}}</strong>
+                                      </p>
+                                      <p class="text-danger mb-1"><strong>${{cartItem.product.price}}</strong></p>
+                                      <div class="cart-plus-minus">
+                                        <input type="text" [value]="cartItem?.quantity" readonly />
+                                        <div (click)="cartService.removeCartProduct(cartItem)" class="dec qtybutton">-</div>
+                                        <div (click)="cartService.addCartProduct(cartItem.productId)" class="inc qtybutton">+</div>
+                                      </div>
+                                      <p class="text-muted">Sold by: NewHolo</p>
+                                    </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                          </table>
+                        </div>
+          
+                        <!-- Right Section (Delivery Option) -->
+                        <div class="col-md-4">
+                          <p class="mb-1 text-black"><strong>Choose a delivery option:</strong></p>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="shipping" id="deliveryOption1" (click)="handleShippingCost(79.99)">
+                            <label class="form-check-label" for="deliveryOption1">
+                              <strong class="text-success">Tuesday, Sep 10 - Friday, Sep 13</strong><br>
+                              $79.99 - Delivery
+                            </label>
+                          </div>
+                          <div class="form-check">
+                            <input class="form-check-input" type="radio" name="shipping" id="freedeliveryOption" (click)="handleShippingCost('free')" checked>
+                            <label class="form-check-label" for="freedeliveryOption">
+                              <strong class="text-success">Free - standard delivery</strong><br>
+                              $0 - Delivery
+                            </label>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+        
+              </div>
+            </div>
+            <!-- Right Section -->
+            <div class="col-lg-3 col-md-12">
+              <div class="card">
+                <div class="d-flex flex-column align-items-center mt-20">
+                  <button class="btn w-75 rounded-pill mb-3" style="background-color: #BC8246; color: white;" (click)="onSubmit()" appTooltip>Place your
+                    order</button>
+                  <div class="text-center border-bottom">
+                    <p class="mb-0">By placing your order, you agree to Outstock's</p>
+                    <p><a href="#" class="text-primary">privacy notice</a> and <a href="#" class="text-primary">conditions of
+                        use</a></p>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h4>Order Summary</h4>
+                  <div class="d-flex justify-content-between mb-2">
+                    <span>Items ({{cartService.totalPriceQuantity().quantity}}):</span>
+                    <span>${{cartService.totalPriceQuantity().total.toFixed(2)}}</span>
+                  </div>
+                  <div class="d-flex justify-content-between mb-2">
+                    <span>Shipping & handling:</span>
+                    <span class="border-bottom">$79.99</span>
+                  </div>
+                  <div class="d-flex justify-content-between mb-2">
+                    <span>Total before tax:</span>
+                    <span>${{cartService.totalPriceQuantity().total.toFixed(2)}}</span>
+                  </div>
+                  <div class="d-flex justify-content-between mb-3">
+                    <span>Estimated tax to be collected:</span>
+                    <span>$0.00</span>
+                  </div>
+                  <hr>
+                  <div class="d-flex justify-content-between">
+                    <h4>Order total:</h4>
+                    <h4 class="text-danger">${{(cartService.totalPriceQuantity().total + shipCost).toFixed(2)}}</h4>
+                  </div>
+                </div>
+                <div class="card-header">
+                  <p class="text-primary pt-3 mb-0">How are shipping costs calculated?</p>
+                  <p class="text-primary">Why didn't I qualify for prime Shipping?</p>
+                </div>
+              </div>
+        
+            </div>
+          </div>
+      </ng-template>
+    </div>
+  </section>
+  <!-- checkout-area end -->
+
+</main>

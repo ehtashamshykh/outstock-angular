@@ -1,0 +1,20 @@
+.card-body {
+    padding: 20px;
+}
+
+/* Thumbnail */
+.img-thumbnail {
+    width: 100px;
+    height: auto;
+    border: none;
+}
+
+.cart-plus-minus {
+    input {
+        width: 78px;
+        height:35px;
+    }
+    .qtybutton {
+        top: 7px;
+    }
+}

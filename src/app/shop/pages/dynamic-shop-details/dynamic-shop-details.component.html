@@ -1,0 +1,22 @@
+<!-- header start -->
+<app-header-one [transparent]="true" [white_bg]="true"></app-header-one>
+<!-- header end -->
+
+<main>
+
+  <!-- breadcrumb start -->
+  <app-breadcrumb-one title="Product Details" subtitle="Product Details"></app-breadcrumb-one>
+  <!-- breadcrumb end -->
+
+  <!-- shop details area start -->
+  <div *ngIf="product">
+    <app-product-details-area [product]="product"></app-product-details-area>
+  </div>
+  <!-- shop details area end -->
+
+  <!-- related products start -->
+  <div *ngIf="brand">
+  <app-related-products [brand]="brand" [productId]="productId"></app-related-products>
+</div>
+  <!-- related products end -->
+</main>

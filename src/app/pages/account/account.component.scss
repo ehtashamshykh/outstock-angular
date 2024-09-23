@@ -1,0 +1,45 @@
+@import "/src/assets/scss/variables";
+
+.delete-btn {
+    font-size: 14px;
+    display: inline-block;
+    height: 30px;
+    width: auto;
+    line-height: 30px;
+    padding: 0 10px;
+    background: $black;
+    color: $white;
+    font-weight: 500;
+    margin-right: 10px;
+    border-radius: 5px;
+    @media #{$md}{
+      display: block;
+      margin-bottom: 15px;
+    }
+    &:hover{
+        background: $theme-color;
+        color: $white;
+    }
+}
+
+.profile__info-title{
+margin: 0px;
+}
+
+.order__info-title{
+  margin-bottom: 0px;
+}
+
+.fa-list-alt{
+  margin-right: 1.5rem;
+}
+
+.info-size {
+  width: 20px;
+  height: 20px;
+  font-size: 21px;
+}
+
+.info-icon{
+  margin-top: 6px;
+}
